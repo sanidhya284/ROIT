@@ -13,7 +13,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
 
 // Import the smart contract ABI and contract address
 const contractABI = require('../build/contracts/SocialMedia.json').abi;
-const contractAddress = ""; // Replace with your actual contract address after deployment
+const contractAddress = "0xa3C6F23b15Aa4b90B9A7B3Eb9c81B9C768678c8F"; // Replace with your actual contract address after deployment
 const socialMediaContract = new web3.eth.Contract(contractABI, contractAddress); // Remove .abi
 
 // Middleware for parsing JSON requests

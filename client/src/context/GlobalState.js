@@ -1,14 +1,27 @@
 import React, { createContext, useReducer } from 'react';
 
-const initialState = { user: null, posts: [] };
+const initialState = {
+  user: null,
+  posts: [],
+  isLoading: false,
+  error: null,
+  // Add other initial state properties if needed
+};
+
 const GlobalContext = createContext(initialState);
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'SET_USER':
+    case 'USER_LOGIN':
       return { ...state, user: action.payload };
-    case 'SET_POSTS':
-      return { ...state, posts: action.payload };
+    case 'USER_LOGOUT':
+      return { ...state, user: null };
+    case 'POSTS_FETCH_REQUESTED':
+      return { ...state, isLoading: true, error: null };
+    case 'POSTS_FETCH_SUCCEEDED':
+      return { ...state, posts: action.payload, isLoading: false };
+    case 'POSTS_FETCH_FAILED':
+      return { ...state, error: action.payload, isLoading: false };
     default:
       return state;
   }

@@ -11,3 +11,4 @@ export const uploadToIPFS = async (file) => {
     console.error('Error uploading file: ', error);
   }
 };
+

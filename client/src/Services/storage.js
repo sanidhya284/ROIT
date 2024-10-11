@@ -20,13 +20,18 @@ export const uploadToS3 = async (file) => {
     return uploadResult.Location;
   } catch (error) {
     console.error('Error uploading file to S3: ', error);
+    throw error; // Re-throw the error for proper handling in calling functions
   }
 };
 
 export const uploadHybrid = async (file) => {
-  // Upload to IPFS and S3
-  const ipfsLink = await uploadToIPFS(file);
-  const s3Link = await uploadToS3(file);
-  
-  return { ipfsLink, s3Link };
+  try {
+    const ipfsLink = await uploadToIPFS(file);
+    const s3Link = await uploadToS3(file);
+
+    return { ipfsLink, s3Link };
+  } catch (error) {
+    console.error('Error uploading file to hybrid storage: ', error);
+    throw error; // Re-throw the error for proper handling in calling functions
+  }
 };
