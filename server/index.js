@@ -1,7 +1,7 @@
 // Import required modules
 const express = require('express');
 const app = express();
-const Web3 = require('web3');
+const {Web3} = require('web3');
 const path = require('path');
 const { create } = require('ipfs-http-client');
 
@@ -13,7 +13,7 @@ const web3 = new Web3(new Web3.providers.HttpProvider("http://127.0.0.1:7545"));
 
 // Import the smart contract ABI and contract address
 const contractABI = require('../build/contracts/SocialMedia.json').abi;
-const contractAddress = "0xa3C6F23b15Aa4b90B9A7B3Eb9c81B9C768678c8F"; // Replace with your actual contract address after deployment
+const contractAddress = "0x9b311b1a5c861133d2eAf967C4c5Bf4903706c40"; // Replace with your actual contract address after deployment
 const socialMediaContract = new web3.eth.Contract(contractABI, contractAddress); // Remove .abi
 
 // Middleware for parsing JSON requests
@@ -39,6 +39,19 @@ app.post('/create-post', async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+// Route to retrieve posts from the blockchain
+app.get('/posts', async (req, res) => {
+  try {
+    const posts = await socialMediaContract.methods.getAllPosts().call();
+    res.json(posts);
+  } catch (error) {
+    console.error('Error fetching posts:', error);
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+// ... rest of your server-side code
 
 // Start the Express server
 const PORT = process.env.PORT || 3000;

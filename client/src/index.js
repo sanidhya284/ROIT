@@ -6,6 +6,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux'; // Import Provider from Redux
 import store from './store'; // Assuming you have a store file
+import Home from './pages/Home';
+import Profile from './pages/Profile';
+import CreatePost from './components/CreatePost';
+import Messages from './pages/Messages';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

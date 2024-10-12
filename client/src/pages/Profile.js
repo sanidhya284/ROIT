@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { GlobalContext } from '../context/GlobalContext';
-import FollowList from './components/FollowList';
+import  GlobalState  from '../context/GlobalState';
+import FollowList from '../components/FollowList';
+import { fetchedPost } from '../Services/blockchainService'; // Assuming fetchUserPosts is defined in blockchainService.js
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
 
 const Profile = () => {
-  const { state } = React.useContext(GlobalContext);
+  const { state } = React.useContext(GlobalState);
   const currentUser = state.user;
 
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
     const loadUserPosts = async () => {
-      // Fetch user's posts from blockchain (adjust based on your implementation)
-      const fetchedPosts = await fetchUserPosts(currentUser.address);
+      const fetchedPosts = await fetchedPosts(currentUser.address);
       setPosts(fetchedPosts);
     };
     loadUserPosts();
@@ -29,10 +30,9 @@ const Profile = () => {
           <small>By: {post.author}</small>
         </div>
       ))}
-      {/* Add sections for following/followers and edit profile options */
+      {/* Add sections for following/followers and edit profile options */}
       <FollowList type="following" /> {/* Render following list */}
       <FollowList type="followers" /> {/* Render followers list */}
-      }
     </div>
   );
 };

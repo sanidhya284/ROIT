@@ -1,9 +1,31 @@
 import { ethers } from 'ethers';
 import SocialMediaContract from '../artifacts/SocialMedia.json'; // Make sure to have the ABI
+export const fetchFollowsData = async (userAddress, followType) => {
+    try {
+        const socialMediaContract = new ethers.Contract(contractAddress, SocialMediaContract.abi);
+        const contractAddress = '0x9b311b1a5c861133d2eAf967C4c5Bf4903706c40'; // Replace with your deployed contract address
+      const follows = await socialMediaContract.methods.getFollows(userAddress, followType).call();
+      return follows;
+    } catch (error) {
+      console.error('Error fetching follows data:', error);
+      return []; // Return an empty array in case of error
+    }
+  };
+export const fetchMessagesData = async (userAddress) => {
+    try {
+        const socialMediaContract = new ethers.Contract(contractAddress, SocialMediaContract.abi);
+        const contractAddress = '0x9b311b1a5c861133d2eAf967C4c5Bf4903706c40'; // Replace with your deployed contract address
+        const messages = await socialMediaContract.methods.getMessages(userAddress).call();
+        return messages;
+    } catch (error) {
+        console.error("Error fetching messages data:", error);
+        return []; // Return an empty array in case of error
+    }
+};
 
 export const createPostOnBlockchain = async (content, signer) => {
     try {
-        const contractAddress = '0xa3C6F23b15Aa4b90B9A7B3Eb9c81B9C768678c8F'; // Replace with your deployed contract address
+        const contractAddress = '0x9b311b1a5c861133d2eAf967C4c5Bf4903706c40'; // Replace with your deployed contract address
         const socialMedia = new ethers.Contract(contractAddress, SocialMediaContract.abi, signer);
 
         // Validate input data (e.g., ensure content is not empty)
@@ -20,6 +42,11 @@ export const createPostOnBlockchain = async (content, signer) => {
         // Wait for the transaction to be mined
         await transaction.wait();
         console.log("Post created on blockchain!");
+
+        // Fetch the newly created post (adjust based on your smart contract)
+        const fetchedPost = await socialMedia.methods.getPost(transaction.hash).call();
+        return fetchedPost;
+
     } catch (error) {
         console.error("Error interacting with smart contract:", error);
         alert("Error interacting with blockchain");
@@ -34,5 +61,9 @@ export const createPostOnBlockchain = async (content, signer) => {
         } else {
             alert("An error occurred while creating the post.");
         }
+
+        // Rethrow the error for further handling if needed
+        throw error;
     }
+    
 };

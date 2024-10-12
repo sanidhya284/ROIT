@@ -9,6 +9,7 @@
     "author": "Your Name",
     "license": "ISC",
     "dependencies": {
+        "@reduxjs/toolkit": "^2.2.8",
         "axios": "^1.7.7",
         "ether": "^0.0.9",
         "ethers": "^6.13.3",
@@ -16,6 +17,7 @@
         "react": "^18.0.0",
         "react-dom": "^18.0.0",
         "react-router-dom": "^6.26.2",
+        "redux-logger": "^3.0.6",
         "web3": "^4.13.0"
     }
 }

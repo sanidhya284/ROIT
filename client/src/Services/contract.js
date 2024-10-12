@@ -1,7 +1,7 @@
 import web3 from './web3';
 import Migrations from '../artifacts/Migrations.json';
 
-const instance = new web3.eth.Contract(Migrations.abi, '0xa3C6F23b15Aa4b90B9A7B3Eb9c81B9C768678c8F');
+const instance = new web3.eth.Contract(Migrations.abi, '0x9b311b1a5c861133d2eAf967C4c5Bf4903706c40');
 
 export const getLastCompletedMigration = async () => {
   try {

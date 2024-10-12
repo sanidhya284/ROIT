@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { GlobalContext } from '../context/GlobalContext';
+import React, { useEffect, useState, useRef } from 'react';
+import  GlobalState from '../context/GlobalState';
+import { fetchFollowsData } from '../Services/blockchainService'; // Import fetchFollowsData
 
-const FollowList = ({ type }) => { // Pass "following" or "followers" as a prop
-  const { state } = React.useContext(GlobalContext);
+const FollowList = ({ type }) => {
+  const { state } = React.useContext(GlobalState);
   const currentUser = state.user;
   const [follows, setFollows] = useState([]);
 
   useEffect(() => {
     const fetchFollows = async () => {
-      // Fetch following or follower data from blockchain (adjust based on your implementation)
       const fetchedFollows = await fetchFollowsData(currentUser.address, type);
       setFollows(fetchedFollows);
     };
+
     fetchFollows();
   }, [currentUser, type]);
-
   return (
     <div>
       <h2>{type === 'following' ? 'Following' : 'Followers'}</h2>

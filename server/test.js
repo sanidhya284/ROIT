@@ -3,7 +3,7 @@ const { describe, it, expect } = require('jest');
 
 // Replace with your actual Ethereum address and post content
 const testData = {
-  account: '0xa3C6F23b15Aa4b90B9A7B3Eb9c81B9C768678c8F', // Replace with your actual Ethereum address
+  account: '0x9b311b1a5c861133d2eAf967C4c5Bf4903706c40', // Replace with your actual Ethereum address
   content: 'Hello from Axios test!' // Your test post content
 };
 

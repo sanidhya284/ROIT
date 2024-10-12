@@ -30,10 +30,13 @@ export const createPost = async (content) => {
     const estimatedGas = await instance.methods.createPost(content).estimateGas();
 
     await instance.methods.createPost(content).send({ from: accounts[0], gasLimit: estimatedGas });
-
+    // Fetch the newly created post (adjust based on your smart contract)
+    const fetchedPost = await instance.methods.getPost(transaction.hash).call();
+    return fetchedPost;
   } catch (error) {
     console.error('Error creating post:', error);
     // Handle specific error types like in blockchainService.js
+    throw error; // Re-throw the error for further handling
   }
 };
 

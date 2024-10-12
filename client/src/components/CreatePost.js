@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ethers } from 'ethers';
-import { createPostOnBlockchain } from '../Services/blockchainService';
-import { GlobalContext } from '../context/GlobalContext';
+import { createPostOnBlockchain, fetchPosts } from '../Services/blockchainService';
+import  GlobalState  from './GlobalState';
 
 const CreatePost = () => {
   const [content, setContent] = useState('');
   const [signer, setSigner] = useState(null);
+  const [fetchedPosts, setFetchedPosts] = useState([]); // Add state for fetched posts
 
-  const { state, dispatch } = React.useContext(GlobalContext);
+  const { state, dispatch } = React.useContext(GlobalState);
 
   // Function to request MetaMask connection
   const connectMetaMask = async () => {
@@ -33,6 +34,19 @@ const CreatePost = () => {
     connectMetaMask();
   }, []);  // Dependency on component mount
 
+  // Function to fetch posts from the blockchain
+  const fetchPosts = async () => {
+    try {
+      // Replace with your logic to fetch posts from the blockchain
+      const response = await fetch('https://your-api-endpoint/posts'); // Placeholder API call
+      const fetchedData = await response.json();
+      setFetchedPosts(fetchedData); // Update fetchedPosts state
+    } catch (error) {
+      console.error('Error fetching posts:', error);
+      dispatch({ type: 'POSTS_FETCH_ERROR', payload: error.message }); // Update error state
+    }
+  };
+
   // Handle post creation
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,18 +65,25 @@ const CreatePost = () => {
       dispatch({ type: 'POSTS_FETCH_START' }); // Start loading indicator
       await fetchPosts(); // Fetch updated posts from blockchain
       dispatch({ type: 'POSTS_FETCH_SUCCESS', payload: fetchedPosts }); // Update posts
-
+      const updatedPosts = await fetchPosts();
+      dispatch({ type: 'POSTS_FETCH_SUCCESS', payload: updatedPosts });
+  
     } catch (error) {
       console.error('Error creating post:', error);
       dispatch({ type: 'POSTS_FETCH_ERROR', payload: error.message }); // Update error state
       // Handle specific error types here for better user feedback
       if (error.code === 4001) {
         alert('User denied transaction confirmation in MetaMask.');
+      } else if (error.code === -32000) {
+        alert('Transaction reverted. Check if the contract logic is correct.');
+      } else if (error.message.includes('insufficient funds')) {
+        alert('Insufficient funds. Please ensure you have enough ETH.');
       } else {
         alert('An error occurred while creating the post.');
       }
     }
   };
+  
 
   return (
     <div>

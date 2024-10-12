@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { GlobalContext } from '../context/GlobalContext';
 import PostActions from './components/PostActions';
 import EditPost from './components/EditPost'; // Assuming EditPost.js is in components

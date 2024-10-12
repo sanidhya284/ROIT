@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useGlobalContext } from '../context/GlobalContext'; // Assuming you're using global state
 
 const PostActions = ({ postId }) => {
