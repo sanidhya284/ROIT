@@ -1,0 +1,88 @@
+/* Header styling to make sure it's fixed at the top */
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 1rem;
+  position: fixed; /* Keeps the header fixed at the top */
+  top: 0;
+  left: 0;
+  width: 100%; /* Makes sure the header spans the full width */
+  z-index: 1000; /* Ensures the header stays above other elements */
+}
+
+nav ul {
+  list-style-type: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+}
+
+form {
+  margin: 2rem 0;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+button {
+  background-color: #333;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #555;
+}
+
+.post {
+  border-bottom: 1px solid #ddd;
+  padding: 1rem 0;
+}
+
+/* Layout adjustments */
+.App {
+  display: flex;
+  flex-direction: column; /* Stacks Header at the top */
+}
+
+/* The layout for sidebar and content */
+.main-layout {
+  display: flex;
+  margin-top: 4rem; /* Add space for the fixed header */
+}
+
+.sidebar {
+  width: 250px; /* Sidebar width */
+  background-color: #f4f4f4;
+  padding: 1rem;
+  height: calc(100vh - 4rem); /* Adjust height to fit below the fixed header */
+  position: fixed;
+  top: 4rem; /* Positioned below the header */
+  left: 0;
+  overflow-y: auto; /* Scroll if sidebar content exceeds height */
+}
+
+.content {
+  margin-left: 250px; /* Space for the sidebar */
+  padding: 1rem;
+  width: 100%;
+  margin-top: 4rem; /* To ensure it doesn't overlap the header */
+}
+
+.post {
+  background-color: #f9f9f9;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+

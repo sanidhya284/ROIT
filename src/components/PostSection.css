@@ -1,0 +1,10 @@
+/* src/components/PostSection.css */
+.post-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    max-width: 800px;
+    margin: auto;  /* Centering the posts in the middle of the page */
+  }
+  
